@@ -165,10 +165,13 @@ SOURCES += \
     gui/sdlgamepadkeynavigation.cpp \
     streaming/video/overlaymanager.cpp \
     backend/systemproperties.cpp \
+    test_ui/main_ui.cpp \
+    test_ui/mainwindow.cpp \
     wm.cpp
 
 HEADERS += \
     backend/nvapp.h \
+    test_ui/mainwindow.h \
     utils.h \
     backend/computerseeker.h \
     backend/identitymanager.h \
@@ -425,3 +428,5 @@ macx {
 
 VERSION = "$$cat(version.txt)"
 DEFINES += VERSION_STR=\\\"$$cat(version.txt)\\\"
+FORMS += \
+    test_ui/mainwindow.ui

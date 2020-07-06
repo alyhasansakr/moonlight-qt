@@ -11,6 +11,7 @@
 #include <QCursor>
 #include <QElapsedTimer>
 #include <QFile>
+#include "ui_main.h"
 
 // Don't let SDL hook our main function, since Qt is already
 // doing the same thing. This needs to be before any headers
@@ -235,8 +236,30 @@ LONG WINAPI UnhandledExceptionHandler(struct _EXCEPTION_POINTERS *ExceptionInfo)
 
 #endif
 
+
+
+
+#include "test_ui/mainwindow.h"
+
+#include <QApplication>
+
+//int main_ui(int argc, char *argv[])
+//{
+//    QApplication a(argc, argv);
+//    MainWindow w;
+//    w.show();
+//    return a.exec();
+//}
+
+
 int main(int argc, char *argv[])
 {
+
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
+
     SDL_SetMainReady();
 
     // Set the app version for the QCommandLineParser's showVersion() command
