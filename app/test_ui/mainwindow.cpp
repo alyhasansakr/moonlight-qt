@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QPointer>
 #include <iostream>
+#include "dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,9 +21,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QPointer<QMessageBox> dialog = new QMessageBox;
-    dialog->setWindowTitle("Hello World");
-    dialog->setText("Hello World");
+    QPointer<QMessageBox> messagebox = new QMessageBox;
+    messagebox->setWindowTitle("Hello World");
+    messagebox->setText("Hello World");
+    messagebox->show();
+
+
+    QPointer<Dialog> dialog = new Dialog;
     dialog->show();
+    dialog->raise();
+
+
     qDebug() << "Hello World\n";
 }
