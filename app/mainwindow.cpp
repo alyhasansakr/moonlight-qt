@@ -53,6 +53,13 @@ void MainWindow::computerPaired(NvComputer* computer, QString)
     if (computer->pairState == NvComputer::PS_PAIRED)
     {
         ui->status_label->setText("computer successfully paired");
+
+        qInfo() << computer->appList.size() << " apps found\n";
+
+        for (int i = 0; i < computer->appList.size(); i++)
+        {
+            qInfo() << "ID: " << computer->appList[i].id << ", Name: " << computer->appList[i].name << "\n";
+        }
     }
     else
     {
