@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "streaming/session.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -13,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete session;
 }
 
 void MainWindow::on_connect_pushButton_clicked()
@@ -36,10 +39,28 @@ void MainWindow::on_pair_pushButton_clicked()
     }
 }
 
+void MainWindow::on_launch_pushButton_clicked()
+{
+    QVector<NvComputer*> computers = computerManager.getComputers();
+    if(computers.isEmpty() == true || computers[0]->state != NvComputer::CS_ONLINE || computers[0]->pairState != NvComputer::PS_PAIRED)
+    {
+        ui->status_label->setText("please connect and pair first!");
+    }
+    else
+    {
+        ui->status_label->setText("launching...");
+
+        session = new Session(computers[0], computers[0]->appList[0]);
+        session->exec(0,0);
+    }
+}
+
 void MainWindow::computerConnected(QVariant success)
 {
     if (success.toBool() == true)
     {
+        computerManager.getComputers()[0]->pairState = NvComputer::PS_NOT_PAIRED;
+
         ui->status_label->setText("computer successfully connected");
     }
     else
@@ -48,10 +69,12 @@ void MainWindow::computerConnected(QVariant success)
     }
 }
 
-void MainWindow::computerPaired(NvComputer* computer, QString)
+void MainWindow::computerPaired(NvComputer* computer, QString error)
 {
-    if (computer->pairState == NvComputer::PS_PAIRED)
+    if (error.isEmpty())
     {
+        computer->pairState = NvComputer::PS_PAIRED;
+
         ui->status_label->setText("computer successfully paired");
 
         qInfo() << computer->appList.size() << " apps found\n";
@@ -63,6 +86,8 @@ void MainWindow::computerPaired(NvComputer* computer, QString)
     }
     else
     {
+        computer->pairState = NvComputer::PS_NOT_PAIRED;
+
         ui->status_label->setText("computer paired failed");
     }
 }

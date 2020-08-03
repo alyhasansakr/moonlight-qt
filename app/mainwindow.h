@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <backend/computermanager.h>
+#include <streaming/session.h>
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,8 @@ private slots:
 
     void on_pair_pushButton_clicked();
 
+    void on_launch_pushButton_clicked();
+
     void computerConnected(QVariant);
 
     void computerPaired(NvComputer*, QString);
@@ -30,6 +33,8 @@ private:
     Ui::MainWindow *ui;
 
     ComputerManager computerManager;
+
+    Session* session;
 };
 
 #endif // MAINWINDOW_H
