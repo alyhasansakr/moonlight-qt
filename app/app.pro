@@ -35,6 +35,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 win32 {
     INCLUDEPATH += \
         $$PWD/../libs/windows/include \
+        $$(DXSDK_DIR)Include \
         $$(DXSDK_DIR)/Include
 
     contains(QT_ARCH, i386) {
